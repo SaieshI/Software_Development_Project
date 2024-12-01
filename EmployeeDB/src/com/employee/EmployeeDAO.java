@@ -42,7 +42,7 @@ public class EmployeeDAO {
 		return con;
 	}
 	/**
-	 * Example program of using connection and inputing data into database
+	 *  Program of using connection and inputing data into database 
 	 */
 	public static void main(String[] str) {
 		System.out.println("This is my Database connection file");
