@@ -1,12 +1,12 @@
-package com.employee;
+package EmployeeDB.src.com.employee;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.employee.model.Employee;
-import com.employee.model.Salary;
+import EmployeeDB.src.com.employee.model.Employee;
+import EmployeeDB.src.com.employee.model.Salary;
 
 public class EmployeeDAO {
     // Database connection object
