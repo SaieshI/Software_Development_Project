@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -18,6 +19,7 @@ public class EmployeeManagementUI extends Application {
         form.setVgap(10);
         form.setHgap(10);
 
+        //extra
         TextField nameField = new TextField();
         nameField.setPromptText("Enter Name");
         TextField ssnField = new TextField();
@@ -44,15 +46,28 @@ public class EmployeeManagementUI extends Application {
         Button searchButton = new Button("Search Employee");
 
         // Mock Actions
-        addButton.setOnAction(e -> showAlert("Add Employee", "Employee added successfully!"));
-        updateButton.setOnAction(e -> showAlert("Update Employee", "Employee updated successfully!"));
-        deleteButton.setOnAction(e -> showAlert("Delete Employee", "Employee deleted successfully!"));
-        searchButton.setOnAction(e -> showAlert("Search Employee", "Employee found!"));
+        addButton.setOnAction(e -> {
+            showAlert("Add Employee", "Employee added successfully!");
+            clearFields(nameField, ssnField, jobField, salaryField);
+        });
+        updateButton.setOnAction(e -> {
+            showAlert("Update Employee", "Employee updated successfully!");
+            clearFields(nameField, ssnField, jobField, salaryField);
+        });
+        deleteButton.setOnAction(e -> {
+            showAlert("Delete Employee", "Employee deleted successfully!");
+            clearFields(nameField, ssnField, jobField, salaryField);
+        });
+        searchButton.setOnAction(e -> {
+            showAlert("Search Employee", "Employee found!");
+            clearFields(nameField, ssnField, jobField, salaryField);
+        });
 
         buttonBar.getChildren().addAll(addButton, updateButton, deleteButton, searchButton);
 
         // Layout
         VBox layout = new VBox(20);
+        layout.setPadding(new Insets(10));
         layout.getChildren().addAll(titleLabel, form, buttonBar);
 
         // Scene
@@ -71,6 +86,13 @@ public class EmployeeManagementUI extends Application {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    //Helper method to Clear Fields
+    private void clearFields(TextField... fields) {
+        for (TextField field : fields) {
+            field.clear(); // Clear the text field
+        }
     }
 
     public static void main(String[] args) {
