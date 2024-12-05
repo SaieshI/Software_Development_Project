@@ -1,4 +1,4 @@
-package EmployeeDB.src.com.employee.model;
+package com.employee;
 
 //required imports
 import java.sql.Connection;

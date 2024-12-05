@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Main",
+            "request": "launch",
+            "mainClass": "EmployeeDB.src.com.employee.Main",
+            "projectName": "Software_Development_Project",
+            "cwd": "${Project_PartB_GUI}",
+            "console": "integratedTerminal"
+        }
+    ]
+}

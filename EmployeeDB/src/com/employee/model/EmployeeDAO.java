@@ -1,4 +1,4 @@
-package EmployeeDB.src.com.employee;
+package com.employee.model;
 
 import java.sql.*;
 import java.util.ArrayList;
