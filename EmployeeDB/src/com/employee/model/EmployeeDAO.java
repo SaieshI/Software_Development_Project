@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import EmployeeDB.src.com.employee.model.Employee;
-import EmployeeDB.src.com.employee.model.Salary;
+import com.employee.model.Employee;
+import com.employee.model.Salary;
 
 public class EmployeeDAO {
     // Database connection object

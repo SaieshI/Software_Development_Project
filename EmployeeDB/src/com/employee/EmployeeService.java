@@ -1,13 +1,15 @@
 package com.employee;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+
+import com.employee.model.EmployeeDAO;
 public class EmployeeService {
     private final EmployeeDAO employeeDAO;
 
     public EmployeeService() {
         employeeDAO = new EmployeeDAO();
     }
-    public void updateEmployeeSalary(double percentage, double minSalary, doublemaxSalary) throws Exception {
+    public void updateEmployeeSalary(double percentage, double minSalary, double maxSalary) throws Exception {
         String query = "UPDATE Salary SET emp_salary = emp_salary + (emp_salary * ? / 100) " +
         "WHERE emp_salary BETWEEN ? AND ?";
         try (Connection con = employeeDAO.getConnection();

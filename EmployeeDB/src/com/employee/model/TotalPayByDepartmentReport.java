@@ -1,4 +1,4 @@
-package EmployeeDB.src.com.employee.model;
+package com.employee.model;
 // Import required packages
 import java.sql.Connection;
 import java.sql.DriverManager;

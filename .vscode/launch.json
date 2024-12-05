@@ -5,9 +5,9 @@
             "type": "java",
             "name": "Launch Main",
             "request": "launch",
-            "mainClass": "EmployeeDB.src.com.employee.Main",
-            "vmArgs": "--module-path lib --add-modules javafx.controls,javafx.fxml",
-            "cwd": "${Project_PartB_GUI}",
+            "mainClass": "com.employee.Main",
+            "vmArgs": "--module-path EmployeeDB/lib --add-modules javafx.controls,javafx.fxml",
+            "cwd": "${workspaceFolder}",
             "console": "integratedTerminal"
         }
     ]

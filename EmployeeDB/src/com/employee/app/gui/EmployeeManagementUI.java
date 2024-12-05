@@ -1,4 +1,4 @@
-package EmployeeDB.src.com.employee.app.gui;
+package com.employee.app.gui;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -74,7 +74,7 @@ public class EmployeeManagementUI extends Application {
 
         // Scene
         Scene scene = new Scene(layout, 400, 300);
-        scene.getStylesheets().add("styles.css");
+        scene.getStylesheets().add("EmployeeDB\\src\\com\\employee\\resources\\styles.css");
 
         primaryStage.setTitle("Employee Management System");
         primaryStage.setScene(scene);

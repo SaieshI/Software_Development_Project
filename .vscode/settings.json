@@ -3,7 +3,7 @@
         "."
     ],
     "java.project.referencedLibraries": [
-        "lib/*.jar"
+        "EmployeeDB/lib/*.jar"
     ],
-    "java.debug.settings.vmArgs": "--module-path lib --add-modules javafx.controls,javafx.fxml"
+    "java.debug.settings.vmArgs": "--module-path EmployeeDB/lib --add-modules javafx.controls,javafx.fxml"
 }
