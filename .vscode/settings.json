@@ -3,7 +3,6 @@
         "."
     ],
     "java.project.referencedLibraries": [
-        "EmployeeDB/lib/*.jar"
+        "EmployeeDB/lib/mysql-connector-j-8.0.31.jar"
     ],
-    "java.debug.settings.vmArgs": "--module-path EmployeeDB/lib --add-modules javafx.controls,javafx.fxml"
 }

@@ -180,8 +180,45 @@ public class EmployeeDAO {
                 rollbackEx.printStackTrace();
             }
         }
-
+              
         return success;
     }
+
+    public boolean deleteEmployee(int employeeId) {
+        String query = "DELETE FROM Employee WHERE empid = ?";
+        try (PreparedStatement statement = con.prepareStatement(query)) {
+            statement.setInt(1, employeeId);
+            int rowsAffected = statement.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    public Employee getEmployeeById(int employeeId) {
+        String query = "SELECT * FROM Employee WHERE empid = ?";
+        try (PreparedStatement statement = con.prepareStatement(query)) {
+            statement.setInt(1, employeeId);
+            ResultSet rs = statement.executeQuery();
+            if (rs.next()) {
+                Employee employee = new Employee();
+                employee.setEmployeeid(rs.getInt("empid"));
+                employee.setFirstName(rs.getString("first_name"));
+                employee.setLastName(rs.getString("last_name"));
+                employee.setSsn(rs.getString("ssn"));
+                employee.setJobTitle(rs.getString("job_title"));
+                employee.setDepartment(rs.getString("department"));
+                // Load salary list here if needed
+                return employee;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
+    
 }
 

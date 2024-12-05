@@ -5,11 +5,8 @@
  * 
  */
 module EmployeeDB {
-	requires java.sql;
-	requires javafx.controls;
-    requires javafx.fxml;
-
-	exports com.employee.app.gui; 
+	requires transitive java.sql;
+	exports com.employee.app.console; 
     exports com.employee; 
 }
 
