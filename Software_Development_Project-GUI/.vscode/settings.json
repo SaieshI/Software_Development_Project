@@ -1,0 +1,9 @@
+{
+    "java.project.sourcePaths": [
+        "."
+    ],
+    "java.project.referencedLibraries": [
+        "EmployeeDB/lib/*.jar"
+    ],
+    "java.debug.settings.vmArgs": "--module-path EmployeeDB/lib --add-modules javafx.controls,javafx.fxml"
+}
