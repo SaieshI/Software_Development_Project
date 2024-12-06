@@ -31,8 +31,10 @@ public class DatabaseSetup {
                     first_name VARCHAR(100),
                     last_name VARCHAR(100),
                     ssn VARCHAR(11),
+                    ssn_no_dashes VARCHAR(15),
                     job_title VARCHAR(100),
-                    department VARCHAR(100)
+                    department VARCHAR(100),
+                    salary DECIMAL(10,2) NOT NULL DEFAULT 0.00
                 )
             """;
             stmt.executeUpdate(createEmployeeTableSQL);

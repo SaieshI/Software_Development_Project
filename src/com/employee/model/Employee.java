@@ -5,15 +5,18 @@ public class Employee {
     private String ssn;
     private String jobTitle;
     private double salary;
+    private String department; // Add department field
 
-    public Employee(String name, String ssn, String jobTitle, double salary) {
+    // Constructor with department
+    public Employee(String name, String ssn, String jobTitle, double salary, String department) {
         this.name = name;
         this.ssn = ssn;
         this.jobTitle = jobTitle;
         this.salary = salary;
+        this.department = department;
     }
 
-    // Getters and Setters
+    // Getter and setter for name
     public String getName() {
         return name;
     }
@@ -22,6 +25,7 @@ public class Employee {
         this.name = name;
     }
 
+    // Getter and setter for SSN
     public String getSsn() {
         return ssn;
     }
@@ -30,6 +34,7 @@ public class Employee {
         this.ssn = ssn;
     }
 
+    // Getter and setter for job title
     public String getJobTitle() {
         return jobTitle;
     }
@@ -38,11 +43,21 @@ public class Employee {
         this.jobTitle = jobTitle;
     }
 
+    // Getter and setter for salary
     public double getSalary() {
         return salary;
     }
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+
+    // Getter and setter for department
+    public String getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(String department) {
+        this.department = department;
     }
 }
