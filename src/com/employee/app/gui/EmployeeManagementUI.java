@@ -1,10 +1,13 @@
 package com.employee.app.gui;
 
+import java.util.Map;
+
 import com.employee.dao.EmployeeDAO;
 import com.employee.model.Employee;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -13,8 +16,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.Map;
 
 public class EmployeeManagementUI extends Application {
 
@@ -74,6 +75,41 @@ public class EmployeeManagementUI extends Application {
                 reportByJobTitleButton, reportByDepartmentButton
         );
 
+
+        // Report by Job Title
+reportByJobTitleButton.setOnAction(e -> {
+    try {
+        Map<String, Double> report = employeeDAO.getTotalPayByJobTitle();
+        if (report.isEmpty()) {
+            showAlert("Report", "No data available for the job title report.");
+        } else {
+            StringBuilder reportContent = new StringBuilder("Total Pay by Job Title:\n");
+            report.forEach((jobTitle, totalPay) -> reportContent.append(String.format("%s: $%.2f\n", jobTitle, totalPay)));
+            showAlert("Job Title Report", reportContent.toString());
+        }
+    } catch (Exception ex) {
+        showAlert("Error", "Failed to generate job title report: " + ex.getMessage());
+    }
+});
+
+
+// Report by Department
+reportByDepartmentButton.setOnAction(e -> {
+    try {
+        Map<String, Double> report = employeeDAO.getTotalPayByDepartment();
+        if (report.isEmpty()) {
+            showAlert("Report", "No data available for the department report.");
+        } else {
+            StringBuilder reportContent = new StringBuilder("Total Pay by Department:\n");
+            report.forEach((department, totalPay) -> reportContent.append(String.format("%s: $%.2f\n", department, totalPay)));
+            showAlert("Department Report", reportContent.toString());
+        }
+    } catch (Exception ex) {
+        showAlert("Error", "Failed to generate department report: " + ex.getMessage());
+    }
+});
+
+
         // Add Employee functionality
         addButton.setOnAction(e -> {
             try {
@@ -117,16 +153,19 @@ public class EmployeeManagementUI extends Application {
                     return;
                 }
         
-                employeeDAO.updateEmployee(ssn, jobTitle, salary, department);
-                refreshTable(employeeDAO);
-                showAlert("Success", "Employee updated successfully!");
+                // Perform update
+                boolean isUpdated = employeeDAO.updateEmployee(ssn, jobTitle, salary, department);
+                if (isUpdated) {
+                    refreshTable(employeeDAO); // Refresh the table after update
+                    showAlert("Success", "Employee updated successfully!");
+                } else {
+                    showAlert("Error", "No employee found with the given SSN.");
+                }
             } catch (Exception ex) {
                 showAlert("Error", "Failed to update employee: " + ex.getMessage());
             }
         });
-        
-        
-        // Delete Employee functionality
+
         deleteButton.setOnAction(e -> {
             try {
                 String ssn = ssnField.getText();
@@ -134,7 +173,7 @@ public class EmployeeManagementUI extends Application {
                     showAlert("Error", "SSN is required to delete.");
                     return;
                 }
-
+        
                 employeeDAO.deleteEmployee(ssn);
                 refreshTable(employeeDAO);
                 showAlert("Success", "Employee deleted successfully!");
@@ -143,9 +182,34 @@ public class EmployeeManagementUI extends Application {
                 showAlert("Error", "Failed to delete employee: " + ex.getMessage());
             }
         });
+        
+        
+
+        // Search Employee functionality
+        searchButton.setOnAction(e -> {
+            try {
+                String identifier = ssnField.getText();
+                if (identifier.isEmpty()) {
+                    showAlert("Error", "SSN or Name is required to search.");
+                    return;
+                }
+
+                Employee employee = employeeDAO.searchEmployee(identifier);
+                if (employee != null) {
+                    ObservableList<Employee> searchResult = FXCollections.observableArrayList(employee);
+                    tableView.setItems(searchResult);
+                    showAlert("Success", "Employee found.");
+                } else {
+                    showAlert("Error", "No employee found with the given identifier.");
+                }
+            } catch (Exception ex) {
+                showAlert("Error", "Failed to search employee: " + ex.getMessage());
+            }
+        });
 
         // Layout
         VBox layout = new VBox(20);
+        layout.setPadding(new Insets(10));
         layout.getChildren().addAll(titleLabel, tableView, form, buttonBar);
 
         // Scene
@@ -157,6 +221,12 @@ public class EmployeeManagementUI extends Application {
         // Initial Table Load
         refreshTable(employeeDAO);
     }
+        //Helper method to Clear Fields
+        private void clearFields(TextField... fields) {
+            for (TextField field : fields) {
+                field.clear(); // Clear the text field
+            }
+        }
 
     private void setupTableView() {
         TableColumn<Employee, String> nameColumn = new TableColumn<>("Name");
@@ -179,7 +249,6 @@ public class EmployeeManagementUI extends Application {
         tableView.getColumns().add(jobTitleColumn);
         tableView.getColumns().add(salaryColumn);
         tableView.getColumns().add(departmentColumn);
-
     }
 
     private void refreshTable(EmployeeDAO employeeDAO) {

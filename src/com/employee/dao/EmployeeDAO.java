@@ -64,9 +64,10 @@ public class EmployeeDAO {
     /**
      * Update an employee's job title and salary by SSN.
      */
-    public void updateEmployee(String ssn, String jobTitle, double salary, String department) throws SQLException {
+    public boolean updateEmployee(String ssn, String jobTitle, double salary, String department) throws SQLException {
         String updateEmployeeQuery = "UPDATE Employee SET job_title = ?, department = ? WHERE ssn_no_dashes = ?";
         String updateSalaryQuery = "UPDATE Salary SET emp_salary = ? WHERE employee_id = (SELECT employee_id FROM Employee WHERE ssn_no_dashes = ?)";
+        boolean updated = false;
     
         try (Connection conn = DatabaseConnection.getConnection()) {
             // Update job title and department in the Employee table
@@ -74,7 +75,8 @@ public class EmployeeDAO {
                 stmt.setString(1, jobTitle);
                 stmt.setString(2, department);
                 stmt.setString(3, ssn);
-                stmt.executeUpdate();
+                int rowsAffected = stmt.executeUpdate();
+                updated = rowsAffected > 0; // Check if any rows were updated
             }
     
             // Update salary in the Salary table
@@ -84,7 +86,9 @@ public class EmployeeDAO {
                 stmt.executeUpdate();
             }
         }
+        return updated;
     }
+    
     
     
     /**
