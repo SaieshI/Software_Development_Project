@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.employee.model.Employee;
-import com.employee.model.Salary;
 
 public class EmployeeDAO {
     // Database connection object
@@ -22,9 +20,9 @@ public class EmployeeDAO {
 
             // Make connection with the database
             con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/Soft_Dev_Project", // Database URL changes based on what you named your own database
+                "jdbc:mysql://localhost:3306/MySQL80", // Database URL changes based on what you named your own database
                 "root", // Database username
-                "Saiesh1234" // Database password is different based on what you put as your username
+                "cherry456" // Database password is different based on what you put as your username
             );
         } catch (Exception e) {
             // Generate exception for further handling
@@ -137,12 +135,12 @@ public class EmployeeDAO {
     public boolean updateEmployee(Employee employee) throws Exception {
         String employeeQuery = "UPDATE Employee SET first_name = ?, last_name = ?, ssn = ?, job_title = ?, department = ? WHERE employee_id = ?";
         String salaryQuery = "UPDATE Salary SET emp_salary = ?, salary_date = ? WHERE salary_id = ? AND employee_id = ?";
+    
         boolean success = false;
-
         try {
-        	con = getConnection(); 
-            con.setAutoCommit(false); // Start transaction
-
+            con = getConnection();
+            con.setAutoCommit(false);
+    
             // Update employee details
             try (PreparedStatement empStmt = con.prepareStatement(employeeQuery)) {
                 empStmt.setString(1, employee.getFirstName());
@@ -153,36 +151,32 @@ public class EmployeeDAO {
                 empStmt.setInt(6, employee.getEmployeeid());
                 empStmt.executeUpdate();
             }
-
-            // Update associated salary records (if any)
-            if (employee.getSalaryList() != null && !employee.getSalaryList().isEmpty()) {
+    
+            // Update associated salary records
+            for (Salary salary : employee.getSalaryList()) {
                 try (PreparedStatement salStmt = con.prepareStatement(salaryQuery)) {
-                    for (Salary salary : employee.getSalaryList()) {
-                        salStmt.setDouble(1, salary.getEmpsalary());
-                        salStmt.setDate(2, new java.sql.Date(salary.getSalarydate().getTime()));
-                        salStmt.setInt(3, salary.getSalaryid());
-                        salStmt.setInt(4, employee.getEmployeeid());
-                        salStmt.addBatch();
-                    }
-                    salStmt.executeBatch();
+                    salStmt.setDouble(1, salary.getEmpsalary());
+                    salStmt.setDate(2, new java.sql.Date(salary.getSalarydate().getTime()));
+                    salStmt.setInt(3, salary.getSalaryid());
+                    salStmt.setInt(4, employee.getEmployeeid());
+                    salStmt.executeUpdate();
                 }
             }
-
-            con.commit(); // Commit transaction
+    
+            con.commit();
             success = true;
-            System.out.println("Employee and salary records updated successfully.");
         } catch (SQLException e) {
             e.printStackTrace();
-            System.err.println("Update failed. Rolling back transaction.");
             try {
                 if (con != null) con.rollback();
             } catch (SQLException rollbackEx) {
                 rollbackEx.printStackTrace();
             }
         }
-              
+    
         return success;
     }
+    
 
     public boolean deleteEmployee(int employeeId) {
         String query = "DELETE FROM Employee WHERE empid = ?";

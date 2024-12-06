@@ -2,7 +2,10 @@ package com.employee.app.console;
 
 import com.employee.model.Employee;
 import com.employee.model.EmployeeDAO;
+import com.employee.model.FullTimeEmployeeReportGenerator;
 import com.employee.model.Salary;
+import com.employee.model.TotalPayByDepartmentReport;
+import com.employee.model.TotalPayByJobTitleReport;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -143,21 +146,24 @@ public class EmployeeManagementConsole {
     }
     
     private static void generateTotalPayByDepartment() {
-        System.out.println("Report: Total Pay by Department");
-        // Call the DAO to get data and display results
-        System.out.println("Feature not yet implemented.");
+        System.out.println("\n--- Total Pay by Department ---");
+        TotalPayByDepartmentReport.generateTotalPayByDepartmentReport();
     }
-    
+
     private static void generateTotalPayByJobTitle() {
-        System.out.println("Report: Total Pay by Job Title");
-        // Call the DAO to get data and display results
-        System.out.println("Feature not yet implemented.");
+        System.out.println("\n--- Total Pay by Job Title ---");
+        TotalPayByJobTitleReport report = new TotalPayByJobTitleReport();
+        try {
+            report.generatePayByJobTitle();
+        } catch (Exception e) {
+            System.err.println("Error generating report: " + e.getMessage());
+        }
     }
-    
+
     private static void generateFullTimeEmployeeReport() {
-        System.out.println("Report: Full-Time Employee Report");
-        // Call the DAO to get data and display results
-        System.out.println("Feature not yet implemented.");
+        System.out.println("\n--- Full-Time Employee Report ---");
+        FullTimeEmployeeReportGenerator report = new FullTimeEmployeeReportGenerator();
+        report.generateFullTimeEmployeeReport();
     }
     
 
